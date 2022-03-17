@@ -1,4 +1,4 @@
-import { useIsAuthorized } from '@entities/user';
+import { useIsAuthorized } from '@features/auth';
 import { compileGuards } from '@lib/routing';
 import { useMemo } from 'react';
 import { renderRoutes } from 'react-router-config';

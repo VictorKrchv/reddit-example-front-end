@@ -1,20 +1,23 @@
 import { Provider } from 'react-redux';
+import styled from 'styled-components';
 
 import { Header } from '@widgets/header';
 import { Pages } from '@pages';
 
+import { MainProvider } from './providers';
 import { store } from './store';
-import styled from 'styled-components';
 
 import './global-styles.css';
 
 export const App = () => {
   return (
     <Provider store={store}>
-      <Main>
-        <Header />
-        <Pages />
-      </Main>
+      <MainProvider>
+        <Main>
+          <Header />
+          <Pages />
+        </Main>
+      </MainProvider>
     </Provider>
   );
 };

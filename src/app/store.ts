@@ -1,9 +1,10 @@
-import { userSlice } from '@entities/user/userSlice';
+import { authSlice } from '@features/auth/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
-    user: userSlice.reducer,
+    auth: authSlice.reducer,
   },
 });
 
@@ -17,3 +18,5 @@ declare module 'react-redux' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultRootState extends RootState {}
 }
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
