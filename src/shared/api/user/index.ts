@@ -31,10 +31,28 @@ export interface UpdateUserPasswordBody {
   newPassword: string;
 }
 
-export const changeUserPassword = (
-  body: UpdateUserPasswordBody,
-): Promise<boolean> => {
+const changeUserPassword = (body: UpdateUserPasswordBody): Promise<boolean> => {
   return httpClient.post('users/update-password', body);
+};
+
+interface SendResetPasswordLinkBody {
+  callbackUrl: string;
+  email: string;
+}
+
+const sendResetPasswordLink = (
+  body: SendResetPasswordLinkBody,
+): Promise<boolean> => {
+  return httpClient.post('users/reset-password/links', body);
+};
+
+interface ResetPasswordBody {
+  code: string;
+  newPassword: string;
+}
+
+const resetPassword = (body: ResetPasswordBody): Promise<boolean> => {
+  return httpClient.post('users/reset-password', body);
 };
 
 export const userApi = {
@@ -42,4 +60,6 @@ export const userApi = {
   getCurrentUser,
   checkEmailFormRegistration,
   changeUserPassword,
+  sendResetPasswordLink,
+  resetPassword,
 };

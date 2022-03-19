@@ -1,4 +1,6 @@
 import { SignInForm } from '@features/auth';
+import { SendResetPasswordEmailModal } from '@features/reset-password';
+import { useDisclosure } from '@lib/hooks/use-disclosure';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material';
 import { paths } from '@pages/paths';
@@ -25,7 +27,9 @@ export const SignInPage = () => {
         <Box sx={{ mt: 1, maxWidth: 600, width: '100%' }}>
           <SignInForm />
           <Grid container>
-            <Grid item xs></Grid>
+            <Grid item xs>
+              <ResetPasswordLink />
+            </Grid>
             <Grid item>
               <Link component={NavLink} to={paths.signUp()} variant="body2">
                 Dont have an account? Sign Up
@@ -35,5 +39,18 @@ export const SignInPage = () => {
         </Box>
       </Box>
     </Grid>
+  );
+};
+
+const ResetPasswordLink = () => {
+  const { isOpen, open, close } = useDisclosure();
+
+  return (
+    <>
+      <SendResetPasswordEmailModal open={isOpen} onClose={close} />
+      <Link onClick={open} variant="body2" sx={{ cursor: 'pointer' }}>
+        Forgot your password?
+      </Link>
+    </>
   );
 };

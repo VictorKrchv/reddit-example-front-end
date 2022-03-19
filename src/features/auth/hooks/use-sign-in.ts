@@ -2,7 +2,6 @@ import { LoginCredentials } from '@api';
 import { useAppDispatch } from '@app/store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from '@lib/constants';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
