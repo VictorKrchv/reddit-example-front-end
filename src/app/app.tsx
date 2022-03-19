@@ -8,17 +8,21 @@ import { MainProvider } from './providers';
 import { store } from './store';
 
 import './global-styles.css';
+import { CssBaseline } from '@mui/material';
 
 export const App = () => {
   return (
-    <Provider store={store}>
-      <MainProvider>
-        <Main>
-          <Header />
-          <Pages />
-        </Main>
-      </MainProvider>
-    </Provider>
+    <>
+      <CssBaseline />
+      <Provider store={store}>
+        <MainProvider>
+          <Main>
+            <Header />
+            <Pages />
+          </Main>
+        </MainProvider>
+      </Provider>
+    </>
   );
 };
 

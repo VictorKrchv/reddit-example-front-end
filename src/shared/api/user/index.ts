@@ -26,8 +26,20 @@ const getCurrentUser = (): Promise<User> => {
   return httpClient.get(`users/me`);
 };
 
+export interface UpdateUserPasswordBody {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export const changeUserPassword = (
+  body: UpdateUserPasswordBody,
+): Promise<boolean> => {
+  return httpClient.post('users/update-password', body);
+};
+
 export const userApi = {
   registerUser,
   getCurrentUser,
   checkEmailFormRegistration,
+  changeUserPassword,
 };

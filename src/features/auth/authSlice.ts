@@ -116,10 +116,8 @@ export const loginByCredentialsThunk = createAsyncThunk<
       TokenStorage.storeToken(tokens);
       dispatch(setIsAuthorized(true));
     })
-    .catch((error: AxiosError<ApiError>) => {
-      if (error.response) {
-        return rejectWithValue(error.response.data.message);
-      }
+    .catch((error: ApiError) => {
+      return rejectWithValue(error.message);
     }),
 );
 
@@ -149,10 +147,8 @@ export const registerUserThunk = createAsyncThunk<
       TokenStorage.storeToken(tokens);
       dispatch(setIsAuthorized(true));
     })
-    .catch((error: AxiosError<ApiError>) => {
-      if (error.response) {
-        return rejectWithValue(error.response.data.message);
-      }
+    .catch((error: ApiError) => {
+      return rejectWithValue(error.message);
     }),
 );
 

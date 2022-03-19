@@ -1,42 +1,28 @@
-import React from 'react';
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { LoginCredentials } from '@api';
-import { useAppDispatch } from '@app/store';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, AlertTitle, Button, TextField } from '@mui/material';
+import React from 'react';
 
-import { clearLoginError, loginByCredentialsThunk } from '../authSlice';
-
-const validationSchema = yup.object().shape({
-  email: yup.string().required().email(),
-  password: yup.string().required().min(6).max(32),
-});
+import { useSignIn } from '../hooks';
 
 export const SignInForm = () => {
-  const dispatch = useAppDispatch();
-  const error = useSelector((state) => state.auth.login.error);
-  const isLoading = useSelector((state) => state.auth.login.isLoading);
-
   const {
-    register,
+    form: {
+      register,
+      formState: { errors },
+    },
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginCredentials>({ resolver: yupResolver(validationSchema) });
-
-  const onSubmit = (values: LoginCredentials) => {
-    dispatch(loginByCredentialsThunk(values));
-  };
+    error,
+    isLoading,
+    clearError,
+  } = useSignIn();
 
   React.useEffect(() => {
     return () => {
-      dispatch(clearLoginError());
+      clearError();
     };
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit}>
       {error && (
         <Alert severity="error">
           <AlertTitle>{error}</AlertTitle>

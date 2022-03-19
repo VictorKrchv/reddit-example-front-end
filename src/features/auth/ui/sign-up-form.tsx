@@ -1,50 +1,28 @@
-import { RegisterUserBody, userApi } from '@api/user';
-import { useAppDispatch } from '@app/store';
-import { registerUserThunk } from '@features/auth';
 import { Alert, AlertTitle, Button, TextField } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
-import { clearRegistrationError } from '../authSlice';
 import React from 'react';
 
-interface FormValues extends RegisterUserBody {
-  passwordConfirmation: string;
-}
-
-const validationSchema = yup.object().shape({
-  email: yup.string().required().email(),
-  password: yup.string().required().min(6).max(32),
-  passwordConfirmation: yup
-    .string()
-    .required()
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
-});
+import { useSignUp } from '../hooks';
 
 export const SignupForm = () => {
-  const dispatch = useAppDispatch();
-  const error = useSelector((state) => state.auth.registration.error);
-  const isLoading = useSelector((state) => state.auth.registration.isLoading);
-
   const {
-    register,
+    form: {
+      register,
+      formState: { errors },
+    },
+    error,
+    isLoading,
+    clearError,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({ resolver: yupResolver(validationSchema) });
-
-  const onSubmit = (values: FormValues) => {
-    dispatch(registerUserThunk(values));
-  };
+  } = useSignUp();
 
   React.useEffect(() => {
     return () => {
-      dispatch(clearRegistrationError());
+      clearError();
     };
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit}>
       {error && (
         <Alert severity="error">
           <AlertTitle>{error}</AlertTitle>

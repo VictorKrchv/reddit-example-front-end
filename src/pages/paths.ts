@@ -4,4 +4,5 @@ export const paths = {
   signIn: () => '/auth/sign-in',
   signUp: () => '/auth/sign-up',
   notFound: () => '/404',
+  settings: () => '/settings',
 };

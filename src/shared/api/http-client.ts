@@ -36,7 +36,7 @@ const processQueue = (error: any, token?: string) => {
   failedQueue = [];
 };
 
-const responseConfig = (config: any) => {
+const responseConfig = (config: any): Promise<ApiError> => {
   return new Promise((resolve, reject) => {
     return axios
       .request(config)
@@ -44,8 +44,8 @@ const responseConfig = (config: any) => {
         resolve(response);
         // tslint:disable-next-line:no-shadowed-variable
       })
-      .catch((error: any) => {
-        reject(error);
+      .catch((error: AxiosError<ApiError>) => {
+        reject(error.response?.data);
       });
   });
 };
@@ -118,15 +118,15 @@ export class HttpClientService implements HttpClientInterface {
   };
 
   public handleResponseError = (
-    error: AxiosError & { config: AxiosResponseWithRetry },
-  ): Promise<unknown> => {
+    error: AxiosError<ApiError> & { config: AxiosResponseWithRetry },
+  ): Promise<ApiError> => {
     // Return any error which is not due to authentication back to the calling service
     if (
       (error.response && error.response.status !== 401) ||
       error.config._retry
     ) {
       return new Promise((resolve, reject) => {
-        reject(error);
+        reject(error.response!.data);
       });
     }
 
@@ -151,6 +151,7 @@ export class HttpClientService implements HttpClientInterface {
     isRefreshing = true; // set the refreshing var to true
 
     // Try request again with new token
+    // @ts-ignore
     return TokenStorage.refreshToken()
       .then((token) => {
         // New request with new token
@@ -161,11 +162,13 @@ export class HttpClientService implements HttpClientInterface {
 
         return responseConfig(config);
       })
-      .catch((error_) => {
-        processQueue(error_); // Resolve queued
-        TokenStorage.clear();
-        const currentPath = `${window.location.pathname}${window.location.search}`;
-        window.location.replace(`${currentPath}`);
+      .catch((error_: AxiosError & { config: AxiosResponseWithRetry }) => {
+        if (error_.response && error_.response?.status === 401) {
+          processQueue(error_); // Resolve queued
+          TokenStorage.clear();
+          const currentPath = `${window.location.pathname}${window.location.search}`;
+          window.location.replace(`${currentPath}`);
+        }
       })
       .finally(() => {
         isRefreshing = false;
