@@ -1,7 +1,6 @@
 import { Alert, AlertTitle, Button, TextField } from '@mui/material';
 import React from 'react';
-
-import { useSignIn } from '../hooks';
+import { useSignIn } from './hooks';
 
 export const SignInForm = () => {
   const {

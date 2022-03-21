@@ -1,5 +1,5 @@
 import { httpClient } from '@api/http-client';
-import { User } from '@features/auth';
+import { User } from '@entities/session';
 import { Tokens } from '@lib/token';
 
 export interface RegisterUserBody {

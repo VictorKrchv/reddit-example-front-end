@@ -1,10 +1,10 @@
-import { authSlice } from '@features/auth/authSlice';
+import { sessionSlice } from '@entities/session';
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
+    session: sessionSlice.reducer,
   },
 });
 

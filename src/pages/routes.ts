@@ -3,11 +3,13 @@ import { RouteConfig } from 'react-router-config';
 
 import { AuthPage } from './auth';
 import { authRoutes } from './auth/routes';
+import { CreatePostPage } from './create-post';
 
 import { Error404Page } from './error404';
 import { HomePage } from './home';
 
 import { paths } from './paths';
+import { PostPage } from './post';
 import { SettingsPage } from './settings';
 
 export const ROUTES: RouteConfig[] = [
@@ -17,8 +19,18 @@ export const ROUTES: RouteConfig[] = [
     component: HomePage,
   },
   {
+    path: paths.post(':id'),
+    exact: true,
+    component: PostPage,
+  },
+  {
     path: paths.settings(),
     component: SettingsPage,
+    guards: [onlyUsers({ redirect: paths.home() })],
+  },
+  {
+    path: paths.createPost(),
+    component: CreatePostPage,
     guards: [onlyUsers({ redirect: paths.home() })],
   },
   {

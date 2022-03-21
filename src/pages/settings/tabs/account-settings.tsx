@@ -1,7 +1,7 @@
-import { useUser } from '@features/auth';
+import { useUser } from '@entities/session';
 import { ChangePasswordModal } from '@features/change-password';
 import { MIN_PASSWORD_LENGTH } from '@lib/constants';
-import { useDisclosure } from '@lib/hooks/use-disclosure';
+import { useDisclosure } from '@lib/hooks';
 import { Button } from '@mui/material';
 import { SectionItem, SectionWrap } from '@ui';
 

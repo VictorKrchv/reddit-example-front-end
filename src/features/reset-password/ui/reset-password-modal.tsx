@@ -1,4 +1,4 @@
-import { useDisclosure } from '@lib/hooks/use-disclosure';
+import { useDisclosure } from '@lib/hooks';
 import {
   Button,
   Dialog,

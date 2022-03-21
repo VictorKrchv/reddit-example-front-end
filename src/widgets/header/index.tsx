@@ -14,11 +14,10 @@ import {
   ListItemIcon,
 } from '@mui/material';
 import { paths } from '@pages/paths';
-import { useUser } from '@features/auth';
+import { useUser } from '@entities/session';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useDispatch } from 'react-redux';
-import { logoutThunk } from '@features/auth';
-import { useIsAuthorized } from '@features/auth';
+import { logoutThunk, useIsAuthorized } from '@entities/session';
 
 export function Header() {
   const isAuth = useIsAuthorized();
@@ -28,15 +27,11 @@ export function Header() {
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Grid container justifyContent="space-between">
           <Grid item alignItems="center" style={{ display: 'flex' }}>
-            <Typography
-              component="h2"
-              variant="h5"
-              color="inherit"
-              align="center"
-              noWrap
-            >
-              Reddit
-            </Typography>
+            <Link to={paths.home()}>
+              <Typography variant="h6" noWrap component="div">
+                Reddit
+              </Typography>
+            </Link>
           </Grid>
           <Grid item>{isAuth ? <UserMenu /> : <AuthButtons />}</Grid>
         </Grid>

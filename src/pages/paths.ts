@@ -5,4 +5,6 @@ export const paths = {
   signUp: () => '/auth/sign-up',
   notFound: () => '/404',
   settings: () => '/settings',
+  createPost: () => '/create-post',
+  post: (id: number | string) => `/post/${id}`,
 };

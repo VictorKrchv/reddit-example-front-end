@@ -1,7 +1,6 @@
 import { Alert, AlertTitle, Button, TextField } from '@mui/material';
 import React from 'react';
-
-import { useSignUp } from '../hooks';
+import { useSignUp } from './hooks';
 
 export const SignupForm = () => {
   const {

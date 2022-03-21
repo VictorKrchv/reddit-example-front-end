@@ -1,4 +1,5 @@
 import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import { MainTemplate } from '@ui';
 import React from 'react';
 import styled from 'styled-components';
 import { AccountSettingsTab } from './tabs';
@@ -11,29 +12,23 @@ export const SettingsPage = () => {
   };
 
   return (
-    <SettingsPageWrap>
-      <Container>
-        <Typography sx={{ mt: 2 }} variant="h6" component="h6">
-          User settings
-        </Typography>
-
-        <Tabs
-          sx={{ mt: 2 }}
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Account settings" {...a11yProps(0)} />
-          <Tab label="Profile settings" {...a11yProps(1)} />
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          <AccountSettingsTab />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Profile settings soon
-        </TabPanel>
-      </Container>
-    </SettingsPageWrap>
+    <MainTemplate title="User settings">
+      <Tabs
+        sx={{ mt: 2 }}
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+      >
+        <Tab label="Account settings" {...a11yProps(0)} />
+        <Tab label="Profile settings" {...a11yProps(1)} />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <AccountSettingsTab />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Profile settings soon
+      </TabPanel>
+    </MainTemplate>
   );
 };
 

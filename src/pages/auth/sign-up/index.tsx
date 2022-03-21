@@ -1,4 +1,4 @@
-import { SignupForm } from '@features/auth';
+import { SignupForm } from '@features/registration';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material';
 import { paths } from '@pages/paths';

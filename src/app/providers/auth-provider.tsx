@@ -3,13 +3,13 @@ import {
   getCurrentUserThunk,
   useIsAuthorized,
   initSession,
-} from '@features/auth';
+} from '@entities/session';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const AuthProvider: React.FC = ({ children }) => {
   const dispatch = useDispatch();
-  const sessionIsInited = useSelector((state) => state.auth.isSessionInited);
+  const sessionIsInited = useSelector((state) => state.session.isSessionInited);
   const isAuth = useIsAuthorized();
 
   React.useEffect(() => {

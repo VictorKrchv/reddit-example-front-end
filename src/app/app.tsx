@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux';
 import styled from 'styled-components';
 
 import { Header } from '@widgets/header';
@@ -7,7 +6,6 @@ import { ResetPasswordModal } from '@features/reset-password';
 import { CssBaseline } from '@mui/material';
 
 import { MainProvider } from './providers';
-import { store } from './store';
 
 import './global-styles.css';
 
@@ -16,14 +14,12 @@ export const App = () => {
     <>
       <Modals />
       <CssBaseline />
-      <Provider store={store}>
-        <MainProvider>
-          <Main>
-            <Header />
-            <Pages />
-          </Main>
-        </MainProvider>
-      </Provider>
+      <MainProvider>
+        <Main>
+          <Header />
+          <Pages />
+        </Main>
+      </MainProvider>
     </>
   );
 };

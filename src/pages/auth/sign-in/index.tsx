@@ -1,6 +1,6 @@
-import { SignInForm } from '@features/auth';
+import { SignInForm } from '@features/auth/auth-by-credentials';
 import { SendResetPasswordEmailModal } from '@features/reset-password';
-import { useDisclosure } from '@lib/hooks/use-disclosure';
+import { useDisclosure } from '@lib/hooks';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Grid, Link, Paper, Typography } from '@mui/material';
 import { paths } from '@pages/paths';
