@@ -1,2 +1,2 @@
-export * from './use-posts';
-export * from './use-post';
+export * from './use-post-list';
+export * from './use-post-details';

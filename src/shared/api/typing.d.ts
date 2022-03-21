@@ -4,6 +4,11 @@ interface ApiError {
   statusCode: number;
 }
 
+interface PaginationParams {
+  page: number;
+  take: number;
+}
+
 interface Meta {
   page: number;
   take: number;
@@ -15,4 +20,5 @@ interface Meta {
 
 interface ApiListResponse<T> {
   data: T[];
+  meta: Meta;
 }

@@ -1,20 +1,14 @@
 import { Link, useHistory } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Pagination } from '@mui/material';
 
-import { Post, usePosts } from '@entities/post';
+import { Post, usePostList } from '@entities/post';
 import { useIsAuthorized } from '@entities/session';
 import { paths } from '@pages/paths';
 import { MainTemplate } from '@ui';
 import { PostsList } from '@widgets/posts';
 
 export const HomePage = () => {
-  const { query } = usePosts();
-  const history = useHistory();
   const isAuth = useIsAuthorized();
-
-  const handlePostClick = (post: Post) => {
-    history.push(paths.post(post.id));
-  };
 
   return (
     <MainTemplate>
@@ -25,11 +19,33 @@ export const HomePage = () => {
           </Button>
         </Link>
       )}
+      <Posts />
+    </MainTemplate>
+  );
+};
+
+const Posts = () => {
+  const history = useHistory();
+
+  const { query, pagination } = usePostList();
+
+  const handlePostClick = (post: Post) => {
+    history.push(paths.post(post.id));
+  };
+
+  return (
+    <>
       <PostsList
         onPostClick={handlePostClick}
         posts={query.data?.data}
         isLoading={query.isLoading}
       />
-    </MainTemplate>
+      <Pagination
+        sx={{ mt: 2 }}
+        count={pagination.totalPages}
+        page={pagination.page}
+        onChange={(_, page) => pagination.setPage(page)}
+      />
+    </>
   );
 };

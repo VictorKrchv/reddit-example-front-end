@@ -1,8 +1,8 @@
 import { httpClient } from '@api/http-client';
 import { Post } from '@entities/post';
 
-const getPosts = (): Promise<ApiListResponse<Post>> => {
-  return httpClient.get('posts');
+const getPosts = (params: PaginationParams): Promise<ApiListResponse<Post>> => {
+  return httpClient.get('posts', params);
 };
 
 const getPost = (id: number): Promise<Post> => {

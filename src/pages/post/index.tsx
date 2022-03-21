@@ -1,4 +1,4 @@
-import { usePost } from '@entities/post';
+import { usePostDetails } from '@entities/post';
 import { paths } from '@pages/paths';
 import { PostCard, PostCardSkeleton } from '@widgets/posts';
 import { Redirect, useParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { MainTemplate } from '@ui';
 export const PostPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { query } = usePost(Number(id));
+  const { query } = usePostDetails(Number(id));
 
   if (query.isLoading) {
     return (

@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { CreatePostBody, postsApi } from '@api';
-import { Post } from '@entities/post';
+import { Post, postKeys } from '@entities/post';
 
 const validationSchema: yup.SchemaOf<CreatePostBody> = yup.object().shape({
   title: yup.string().required(),
@@ -16,7 +16,14 @@ interface Params {
 }
 
 export const useCreatePost = ({ onSuccess }: Params) => {
-  const mutation = useMutation(postsApi.createPost, { onSuccess });
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(postsApi.createPost, {
+    onSuccess: (post) => {
+      onSuccess(post);
+      queryClient.removeQueries(postKeys.lists());
+    },
+  });
 
   const form = useForm<CreatePostBody>({
     resolver: yupResolver(validationSchema),

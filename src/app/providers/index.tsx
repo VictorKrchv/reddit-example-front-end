@@ -1,16 +1,17 @@
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
-import { QueryClientProvider } from 'react-query';
 
-import { AuthProvider } from './auth-provider';
 import { store } from '../store';
-import { queryClient } from '@lib/react-query';
+import { AuthProvider } from './auth-provider';
+import { WithQueryClient } from './with-react-query';
 
 export const MainProvider: React.FC = ({ children }) => {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+      <WithQueryClient>
+        <ReactQueryDevtools initialIsOpen={false} />
         <AuthProvider>{children}</AuthProvider>
-      </QueryClientProvider>
+      </WithQueryClient>
     </Provider>
   );
 };

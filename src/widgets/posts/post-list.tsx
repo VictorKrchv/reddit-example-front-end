@@ -14,18 +14,10 @@ export const PostsList: React.FC<Props> = ({
   posts,
   isLoading,
   onPostClick = () => {},
-  skeletonSize = 6,
+  skeletonSize = 10,
 }) => {
   if (isLoading) {
-    return (
-      <Grid container spacing={2} direction="column">
-        {Array.from({ length: skeletonSize }).map((_, idx) => (
-          <Grid item key={idx}>
-            <PostCardSkeleton />
-          </Grid>
-        ))}
-      </Grid>
-    );
+    return <SkeletonList size={skeletonSize} />;
   }
 
   if (!posts) {
@@ -42,3 +34,13 @@ export const PostsList: React.FC<Props> = ({
     </Grid>
   );
 };
+
+const SkeletonList = ({ size }: { size: number }) => (
+  <Grid container spacing={2} direction="column">
+    {Array.from({ length: size }).map((_, idx) => (
+      <Grid item key={idx}>
+        <PostCardSkeleton />
+      </Grid>
+    ))}
+  </Grid>
+);
