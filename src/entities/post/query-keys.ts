@@ -6,3 +6,8 @@ export const postKeys = {
   details: () => [...postKeys.all, 'detail'] as const,
   detail: (id: number) => [...postKeys.details(), id] as const,
 };
+
+export const postCommentsKeys = {
+  all: ['posts-comments'] as const,
+  byPostId: (id: number) => [...postCommentsKeys.all, id] as const,
+};

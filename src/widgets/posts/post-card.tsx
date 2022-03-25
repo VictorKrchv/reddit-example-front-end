@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { UserAvatar } from '@ui';
 import * as React from 'react';
 
 interface Props {
@@ -27,15 +28,11 @@ export const PostCard: React.FC<Props> = ({ post, onClick }) => {
 
   return (
     <Card
-      sx={{ maxWidth: 1000, cursor: onClick ? 'pointer' : 'default' }}
+      sx={{ cursor: onClick ? 'pointer' : 'default' }}
       onClick={handleClick}
     >
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {author.email.at(0)}
-          </Avatar>
-        }
+        avatar={<UserAvatar username={author.email} />}
         title={author.email}
         subheader={dateTimeUtils.toViewDate(createdAt)}
       />

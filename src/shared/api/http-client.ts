@@ -162,8 +162,8 @@ export class HttpClientService implements HttpClientInterface {
 
         return responseConfig(config);
       })
-      .catch((error_: AxiosError & { config: AxiosResponseWithRetry }) => {
-        if (error_.response && error_.response?.status === 401) {
+      .catch((error_: ApiError) => {
+        if (error_.statusCode === 401) {
           processQueue(error_); // Resolve queued
           TokenStorage.clear();
           const currentPath = `${window.location.pathname}${window.location.search}`;

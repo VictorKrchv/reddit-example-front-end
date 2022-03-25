@@ -7,3 +7,7 @@ export interface Post {
   createdAt: string;
   author: User;
 }
+
+export interface PostComment extends BaseComment {
+  post: Post;
+}

@@ -1,3 +1,16 @@
+interface BaseEntity {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface BaseComment extends BaseEntity {
+  author: { email: string; id: number };
+  message: string;
+  parent: BaseComment;
+  children: BaseComment[];
+}
+
 interface ApiError {
   error: string;
   message: string;

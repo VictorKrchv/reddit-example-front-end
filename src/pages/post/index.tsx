@@ -1,8 +1,9 @@
 import { usePostDetails } from '@entities/post';
+import { Stack } from '@mui/material';
 import { paths } from '@pages/paths';
-import { PostCard, PostCardSkeleton } from '@widgets/posts';
-import { Redirect, useParams } from 'react-router-dom';
 import { MainTemplate } from '@ui';
+import { PostCard, PostCardSkeleton, PostComments } from '@widgets/posts';
+import { Redirect, useParams } from 'react-router-dom';
 
 export const PostPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,7 +26,10 @@ export const PostPage = () => {
 
   return (
     <MainTemplate title={`Post ${post.id}`}>
-      <PostCard post={post} />
+      <Stack spacing={2}>
+        <PostCard post={post} />
+        <PostComments postId={Number(id)} />
+      </Stack>
     </MainTemplate>
   );
 };
