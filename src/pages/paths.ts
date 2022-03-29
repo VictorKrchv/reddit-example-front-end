@@ -7,4 +7,5 @@ export const paths = {
   settings: () => '/settings',
   createPost: () => '/create-post',
   post: (id: number | string) => `/post/${id}`,
+  favorites: () => '/favorites',
 };

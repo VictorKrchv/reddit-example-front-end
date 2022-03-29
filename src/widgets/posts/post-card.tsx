@@ -1,4 +1,5 @@
 import { Post } from '@entities/post';
+import { PostFavoriteActionButton } from '@features/add-remove-post-to-favorite';
 import { dateTimeUtils } from '@lib/date';
 import { Favorite, MoreVert, Share } from '@mui/icons-material';
 import {
@@ -43,22 +44,10 @@ export const PostCard: React.FC<Props> = ({ post, onClick }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <LikeButton post={post} />
+        <PostFavoriteActionButton post={post} />
         <ShareButton post={post} />
       </CardActions>
     </Card>
-  );
-};
-
-const LikeButton = ({ post }: { post: Post }) => {
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  return (
-    <IconButton onClick={handleClick} aria-label="add to favorites">
-      <Favorite />
-    </IconButton>
   );
 };
 

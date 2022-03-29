@@ -6,6 +6,7 @@ export interface Post {
   description: string;
   createdAt: string;
   author: User;
+  favoritesCount: number;
 }
 
 export interface PostComment extends BaseComment {

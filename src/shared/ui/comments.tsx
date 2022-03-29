@@ -1,6 +1,12 @@
 import { dateTimeUtils } from '@lib/date';
-import { useDisclosure } from '@lib/hooks';
-import { ThumbDown, ThumbUp } from '@mui/icons-material';
+import { useDisclosure, usePrevious } from '@lib/hooks';
+import { Picker } from 'emoji-mart';
+import {
+  ArrowDropDown,
+  ArrowDropUp,
+  ThumbDown,
+  ThumbUp,
+} from '@mui/icons-material';
 import {
   Button,
   Card,
@@ -12,9 +18,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import React from 'react';
 
 import { UserAvatar } from './user-avatar';
+import { EmojiPicker } from './emoji-picker';
 
 interface IUser {
   name: string;
@@ -46,6 +54,8 @@ export const Comments: React.FC<Props> = ({
         </Typography>
         {user && (
           <AddCommentForm
+            submitButtonText="Leave a comment"
+            placeholder="Write your comment here"
             isLoading={addCommentIsLoading}
             onSubmit={onAddComment}
             user={user}
@@ -84,6 +94,20 @@ const Comment = ({
   isChild,
   isLoading,
 }: CommentProps) => {
+  const previousChildrenLength = usePrevious<number>(comment.children.length);
+
+  const {
+    isOpen: IsShowAnswers,
+    open: showAnswers,
+    close: hideAnswers,
+  } = useDisclosure();
+
+  React.useEffect(() => {
+    if (comment.children.length !== previousChildrenLength) {
+      showAnswers();
+    }
+  }, [comment]);
+
   const {
     isOpen: isShowAnswerInput,
     open: showAnswerInput,
@@ -95,7 +119,7 @@ const Comment = ({
   const needToShowAnswerLogic = onReply && user;
 
   return (
-    <Grid container>
+    <Grid container wrap="nowrap">
       <Grid item>
         <UserAvatar
           sx={
@@ -139,6 +163,8 @@ const Comment = ({
 
         {!isLoading && needToShowAnswerLogic && isShowAnswerInput && (
           <AddCommentForm
+            submitButtonText="send"
+            placeholder="Write your answer here"
             isNewCommentForm={false}
             onSubmit={onReply}
             user={user}
@@ -146,9 +172,34 @@ const Comment = ({
           />
         )}
 
-        {comment?.children?.map((comm) => (
-          <Comment key={comm.id} isChild user={user} comment={comm} />
-        ))}
+        {comment.children?.length > 0 && (
+          <Typography
+            onClick={IsShowAnswers ? hideAnswers : showAnswers}
+            variant="caption"
+            sx={{
+              color: blue[500],
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '1em',
+            }}
+          >
+            {IsShowAnswers ? (
+              <>
+                <ArrowDropUp /> Hide answers
+              </>
+            ) : (
+              <>
+                <ArrowDropDown /> Show answers
+              </>
+            )}
+          </Typography>
+        )}
+
+        {IsShowAnswers &&
+          comment?.children?.map((comm) => (
+            <Comment key={comm.id} isChild user={user} comment={comm} />
+          ))}
       </Grid>
     </Grid>
   );
@@ -159,6 +210,9 @@ interface AddCommentFormProps {
   showButtonsAfterFocus?: boolean;
   isLoading?: boolean;
   isNewCommentForm?: boolean;
+
+  placeholder?: string;
+  submitButtonText?: string;
 
   onCancel?: () => void;
   onSubmit: (message: string) => void;
@@ -171,6 +225,8 @@ const AddCommentForm: React.FC<AddCommentFormProps> = ({
   onSubmit,
   isLoading,
   isNewCommentForm,
+  placeholder,
+  submitButtonText = 'save',
 }) => {
   const [value, setValue] = React.useState('');
 
@@ -225,6 +281,7 @@ const AddCommentForm: React.FC<AddCommentFormProps> = ({
           sx={{ flex: '1 1 auto' }}
         >
           <TextField
+            placeholder={placeholder}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onFocus={showButtons}
@@ -235,19 +292,33 @@ const AddCommentForm: React.FC<AddCommentFormProps> = ({
             variant="standard"
           />
           {isShowButtons && (
-            <Stack direction="row" justifyContent="flex-end" sx={{ mt: 1 }}>
-              <Button size="small" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button
-                disabled={submitButtonIsDisabled}
-                type="submit"
-                variant="contained"
-                size="small"
-              >
-                Save
-              </Button>
-            </Stack>
+            <Grid
+              container
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{ mt: 1 }}
+            >
+              <Grid item>
+                <EmojiPicker
+                  onSelect={(emoji) => setValue((value) => value + emoji)}
+                />
+              </Grid>
+              <Grid item>
+                <Stack direction="row">
+                  <Button size="small" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={submitButtonIsDisabled}
+                    type="submit"
+                    variant="contained"
+                    size="small"
+                  >
+                    {submitButtonText}
+                  </Button>
+                </Stack>
+              </Grid>
+            </Grid>
           )}
         </Grid>
       )}

@@ -6,6 +6,7 @@ import { authRoutes } from './auth/routes';
 import { CreatePostPage } from './create-post';
 
 import { Error404Page } from './error404';
+import { FavoritePostsPage } from './favorites';
 import { HomePage } from './home';
 
 import { paths } from './paths';
@@ -26,6 +27,11 @@ export const ROUTES: RouteConfig[] = [
   {
     path: paths.settings(),
     component: SettingsPage,
+    guards: [onlyUsers({ redirect: paths.home() })],
+  },
+  {
+    path: paths.favorites(),
+    component: FavoritePostsPage,
     guards: [onlyUsers({ redirect: paths.home() })],
   },
   {

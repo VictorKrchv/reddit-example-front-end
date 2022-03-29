@@ -9,7 +9,7 @@ const getPost = (id: number): Promise<Post> => {
   return httpClient.get(`posts/${id}`);
 };
 
-export type CreatePostBody = Omit<Post, 'author' | 'id' | 'createdAt'>;
+export type CreatePostBody = Pick<Post, 'title' | 'description'>;
 
 const createPost = (body: CreatePostBody): Promise<Post> => {
   return httpClient.post('posts', body);
@@ -39,6 +39,18 @@ const replyComment = ({ message, parentId, postId }: ReplyPostCommentBody) => {
   });
 };
 
+const getFavoritesPosts = () => {
+  return httpClient.get(`posts/favorites`);
+};
+
+const addPostToFavorite = (postId: number) => {
+  return httpClient.post(`posts/${postId}/favorite`);
+};
+
+const deletePostFromFavorite = (postId: number) => {
+  return httpClient.delete(`posts/${postId}/favorite`);
+};
+
 export const postsApi = {
   getPosts,
   createPost,
@@ -46,4 +58,7 @@ export const postsApi = {
   getPostComments,
   addCommentToPost,
   replyComment,
+  addPostToFavorite,
+  deletePostFromFavorite,
+  getFavoritesPosts,
 };

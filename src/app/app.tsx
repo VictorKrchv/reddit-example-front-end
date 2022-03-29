@@ -8,6 +8,7 @@ import { CssBaseline } from '@mui/material';
 import { MainProvider } from './providers';
 
 import './global-styles.css';
+import 'emoji-mart/css/emoji-mart.css';
 
 export const App = () => {
   return (

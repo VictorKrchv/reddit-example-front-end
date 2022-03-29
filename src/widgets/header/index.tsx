@@ -85,6 +85,9 @@ const UserMenu = () => {
           onClose={handleCloseMenu}
         >
           <MenuItem>
+            <Link to={paths.favorites()}>Favorites</Link>
+          </MenuItem>
+          <MenuItem>
             <Link to={paths.settings()}>Settings</Link>
           </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
